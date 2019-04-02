@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+          <head>
+                    <title>Salute Beach</title>
+                    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+                    <link rel="stylesheet" href="/stylesheets/main.css">
+                    <link href="https://fonts.googleapis.com/css?family=Berkshire+Swash|Open+Sans" rel="stylesheet">
+                    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+                    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+          </head>
+<body>
+          <nav class="navbar navbar-default" id="navbar-mar">
+             <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>                        
+                      </button>
+                   <a class="navbar-brand" href="/">
+                       <span class="special-font">Salute, Beach</span>
+                   </a>
+                </div>
+                <div class="collapse navbar-collapse" id="myNavbar">
+                   <ul class="nav navbar-nav navbar-right">
+                       <li>
+                           <form action="/beach" method="GET" class="navbar-form navbar-left" role="search">
+                              <div class="form-group">
+                                <input type="text" name="search" class="form-control" placeholder="Search">
+                                <input type="submit" class="btn btn-info" value="Search">
+    
+                              </div>
+                            </form>
+                           
+                       </li>
+                        <li>
+                          <a href="/beach">View ALL</a>
+                           
+                       </li>
+                       <% if(!currentUser){ %>
+                           <li><a href="/auth/instagram">Login</a></li>
+                       <% }else{ %>
+                           <li><a>Welcome, <%=currentUser.name%>!</a> </li>
+                           <li><a href="/logout">Log out</a></li>
+                       <% } %>
+                   </ul>
+                </div>
+             </div>
+          </nav>
+          
+          <div class="container">
+              <% if (error && error.length>0){ %>
+               <div class="alert alert-danger" role="alert"><%=error%></div>
+               <% } %>
+               <% if(info && info.length>0){ %>
+                <div class="alert alert-info" role="alert"><%=info%></div>
+                <% } %>
+
+          </div>
+         
+      
+              
+         
+          

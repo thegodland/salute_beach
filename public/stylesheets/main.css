@@ -1,0 +1,71 @@
+
+
+.thumbnail img {
+    width: 100%;
+}
+
+.thumbnail {
+    padding: 0;
+}
+
+.thumbnail .caption-full {
+    padding: 9px; 
+}
+
+.deleteForm{
+    display:inline;
+}
+
+/* Google Maps */
+#map {
+    height: 400px;
+    width: 100%;
+}
+
+
+
+nav {
+    background: #B2FEFA;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #0ED2F7, #B2FEFA);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #0ED2F7, #B2FEFA); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+body {
+    
+    background: #B2FEFA;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #0ED2F7, #B2FEFA);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #0ED2F7, #B2FEFA); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    
+}
+
+#navbar-mar {
+    margin-bottom: 0;
+    height: 55px;
+}
+
+.gap{
+    margin-top: 20px;
+}
+
+.usually-font {
+    font-family: 'Open Sans', sans-serif;
+    font-size:25px;
+}
+
+.special-font {
+    font-family: 'Berkshire Swash', cursive;
+    font-size:48px;
+}
+
+#chat{
+    display:none;
+}
+#map{
+    display:none;
+}
+
+.img-height{
+    max-height: 177px;
+    min-height: 177px;
+}
+

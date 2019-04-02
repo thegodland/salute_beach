@@ -1,0 +1,166 @@
+<% include ../partials/header %>
+
+<!--the page to show more details of a beach-->
+<div class="container gap">
+    <div class="row">
+        <div class="col-md-3">
+            <p class="lead usually-font">Salute, Beach</p>
+            <div class="list-group">
+                <li class="list-group-item">Map</li>
+                <li class="list-group-item">Chat</li>
+
+            </div>
+            <div id="map"></div>
+        </div>
+    
+        <div class="col-md-9">
+            <div class="thumbnail">
+                <img class="img-responsive" src="<%= beach.img %>">
+                <div class="caption-full">
+                    <h4 class="pull-right">$<%= beach.price %>/night</h4>
+                    <h4 class="usually-font"><a><%= beach.name %></a></h4>
+                    <p><%= beach.description %></p>
+                    <p><em>Created by <%= beach.author.username%>, <%= moment(beach.createdAt).fromNow() %></em></p>
+                    <% if (currentUser && beach.author.id.equals(currentUser._id)){%>
+                    <a class="btn btn-warning btn-xs" href="/beach/<%=beach._id%>/edit">Edit</a>
+                    <form class="deleteForm" action="/beach/<%=beach._id%>?_method=DELETE" method="POST">
+                        <button class="btn btn-xs btn-danger">Delete</button>
+                    </form>
+                    <% } %>
+                </div>
+            </div>
+            <div class="well">
+                <div class="text-right">
+                    <a class="btn btn-success" href="/beach/<%=beach._id%>/comments/new">Add a new comment</a>
+                </div>
+                <hr>
+                <% beach.comments.forEach(function(comment){ %>
+                <div class="row">
+                    <div class="col-md-12">
+                        <strong><%= comment.author.username %></strong>
+                        <span class="pull-right"> <%= moment(comment.createdAt).fromNow() %></span>
+                        <p><%= comment.text %></p>
+                        <% if (currentUser && comment.author.id.equals(currentUser._id)){%>
+                        <a class="btn btn-xs btn-warning" 
+                            href="/beach/<%=beach._id%>/comments/<%=comment._id%>/edit">Edit</a>
+                        <form class="deleteForm" 
+                            action="/beach/<%=beach._id%>/comments/<%=comment._id%>?_method=DELETE" method="POST">
+                            <button class="btn btn-xs btn-danger">Delete</button>
+                        </form>
+                        <% }%>
+                    </div>
+                </div>
+                     
+                <% }); %>
+            </div>
+            
+            <!--for chat -->
+            <div id="chat">
+                <form name="chatForm" class="form-horizontal chat-form">
+                    <div class="form-group">
+                        <label for="chat-username" class="col-sm-2 control-label">Name</label>
+                        <div class="col-sm-10">
+                          <input type="text" class="form-control" id="chat-username" required readonly>
+                         <% if (currentUser) { %>
+                           <input id="hiddenValue" type="hidden" value='<%= currentUser.name %>' > 
+                          <% } %>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="chat-message" class="col-sm-2 control-label">Message</label>
+                        <div class="col-sm-10">
+                            <div class="input-group">
+                            <input type="text" placeholder="Enter a message, then press enter" class="form-control" id="chat-message" rows="2" autocomplete="off"
+                     required>
+                            <span class="input-group-btn">
+                            <button id="chat-submit" class="btn btn-info" type="submit">Chat</button>
+                            </span>
+                            </div><!-- input-group -->
+                        </div><!-- col-sm-10 -->
+                    </div><!-- form-group -->
+                </form>
+                    <div class="panel panel-default">
+                      <div class="panel-body chat-display">
+                        <p class="text-muted chat-text">Welcome...add your message using the form above</p>
+                      </div><!-- panel-body -->
+                    </div>
+            </div>
+            
+            
+            
+        </div>
+    </div>
+</div>
+
+<script>
+    var check = document.querySelector("#hiddenValue");
+    var showname = document.querySelector("#chat-username");
+    if(check){
+        console.log(check)
+        showname.value=check.value;
+    }else{
+        showname.value = "Anonymous";
+    }
+</script>
+
+<script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+<script src="/js/chat.js"></script>
+
+<script>
+  function initMap() {
+    var lat = <%= beach.lat %>;
+    var lng = <%= beach.lng %>;
+    var center = {lat: lat, lng: lng };
+    var map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 8,
+        center: center,
+        scrollwheel: false
+    });
+    var contentString = `
+      <strong><%= beach.name %><br />
+      <%= beach.location %></strong>
+      <p><%= beach.description %></p>
+    `
+    var infowindow = new google.maps.InfoWindow({
+      content: contentString
+    });
+    var marker = new google.maps.Marker({
+        position: center,
+        map: map
+    });
+    marker.addListener('click', function() {
+      infowindow.open(map, marker);
+    });
+  }
+</script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAoA8wR5PtYiHw0eVmQfrTkG5S4LgoGwd8&callback=initMap"></script>
+
+<script>
+    var mapButton = document.getElementsByClassName("list-group-item")[0];
+    var chatButton = document.getElementsByClassName("list-group-item")[1];
+
+    mapButton.addEventListener("click",function(){
+            var toggleMap = document.querySelector("#map");
+            if (toggleMap.style.display === "none") {
+                    toggleMap.style.display = "block";
+                    mapButton.classList.add("active");
+                } else {
+                    toggleMap.style.display = "none";
+                    mapButton.classList.remove("active");
+                }
+    });
+    
+    chatButton.addEventListener("click",function(){
+            var toggleChat = document.querySelector("#chat");
+            if (toggleChat.style.display === "none") {
+                    toggleChat.style.display = "block";
+                    chatButton.classList.add("active");
+                } else {
+                    toggleChat.style.display = "none";
+                    chatButton.classList.remove("active");
+                }
+    });
+</script>
+
+
+<% include ../partials/footer %>

@@ -1,0 +1,31 @@
+<% include ../partials/header %>
+<!--the index page to show all the beaches-->
+<div class="container gap">
+   <header class="jumbotron">
+      <div class="container"> 
+
+         <h1 class="usually-font">Welcome to Endless Beaches</h1>
+         <p class="usually-font">Beach Lover? This is your parardise!</p>
+         <p>
+            <a class="btn btn-primary btn-lg usually-font" href="/beach/new">Add your favorite beach</a>
+         </p>
+      </div>
+   </header>
+   
+   <div class="row text-center usually-font" style="display: flex; flex-wrap:wrap;">
+      <% beaches.forEach(function(beach){ %>
+      <div class="col-md-3 col-sm-6">
+         <div class="thumbnail">
+            <img class="img-thumbnail img-height" src="<%= beach["img"] %>">
+            <div class="caption">
+               <h4><%= beach["name"] %></h4>
+            </div>
+            <p><a href="/beach/<%= beach._id %>" class="btn btn-primary">More Info</a></p>
+         </div>
+        
+      </div>
+      <% }); %>
+   </div>
+</div>
+
+<% include ../partials/footer %>

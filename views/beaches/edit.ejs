@@ -1,0 +1,38 @@
+<% include ../partials/header %>
+<!--the page of edit beach-->
+<div class="container gap">
+    <div class="row">
+        <h1 style="text-align: center">Edit <%=beach.name%></h1>
+        <div style="width: 30%;margin: 25px auto;">
+            <form action="/beach/<%=beach._id%>?_method=PUT" method="POST">
+                  <div class="form-group">
+                      <label for="beach[name]">Name</label>
+                    <input class="form-control" type="text" name="beach[name]" value="<%=beach.name%>">
+                </div>
+                   <div class="form-group">
+                       <label for="beach[price]">Price</label>
+                    <input class="form-control" type="number" name="beach[price]" value="<%=beach.price%>" min="0" step="1">
+                </div>
+                <div class="form-group">
+                    <label for="beach[location]">Location</label>
+                    <input class="form-control" type="text" name="beach[location]" value="<%= beach.location %>">
+                </div>
+                <div class="form-group">
+                    <label for="beach[image]">Image</label>
+                    <input class="form-control" type="text" name="beach[img]" value="<%=beach.img%>">
+                </div>
+                <div class="form-group">
+                    <label for="beach[description]">Description</label>
+                    <textarea rows="5" class="form-control" name="beach[description]"><%=beach.description%></textarea>
+                </div>
+               
+                <div class="form-group">
+                    <button class="btn btn-lg btn-primary btn-block">Update</button>
+                </div>
+            </form>
+            <a href="/beach">Go back</a>
+        </div>
+    </div>
+</div>
+
+<% include ../partials/footer %>
